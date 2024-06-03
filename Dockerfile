@@ -39,6 +39,6 @@ RUN pip3 install docker
 # docker-compose --version
 
 # RUN ./usr/local/bin/docker-compose up -d 
-# RUN docker-compose up -d 
+RUN docker-compose up -d --build
 
 ENTRYPOINT [ "sh" ]
