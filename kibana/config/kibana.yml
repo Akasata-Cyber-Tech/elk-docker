@@ -3,8 +3,9 @@
 ## https://github.com/elastic/kibana/blob/main/src/dev/build/tasks/os_packages/docker_generator/templates/kibana_yml.template.ts
 #
 server.name: kibana
+server.port: 5601
 server.host: 0.0.0.0
-elasticsearch.hosts: [ http://elasticsearch:9200 ]
+elasticsearch.hosts: [ http://10.20.20.125:9200 ]
 
 monitoring.ui.container.elasticsearch.enabled: true
 monitoring.ui.container.logstash.enabled: true
@@ -12,7 +13,9 @@ monitoring.ui.container.logstash.enabled: true
 ## X-Pack security credentials
 #
 elasticsearch.username: kibana_system
+# elasticsearch.username: elastic
 elasticsearch.password: ${KIBANA_SYSTEM_PASSWORD}
+# elasticsearch.password: changeme
 
 ## Encryption keys (optional but highly recommended)
 ##
@@ -23,20 +26,27 @@ elasticsearch.password: ${KIBANA_SYSTEM_PASSWORD}
 ## https://www.elastic.co/guide/en/kibana/current/using-kibana-with-security.html
 ## https://www.elastic.co/guide/en/kibana/current/kibana-encryption-keys.html
 #
-#xpack.security.encryptionKey:
-#xpack.encryptedSavedObjects.encryptionKey:
-#xpack.reporting.encryptionKey:
+
+xpack.encryptedSavedObjects.encryptionKey: 66cd06ff2bf113426fdf4f8fa3043ac3
+xpack.reporting.encryptionKey: 6303c8f726d3dd2cc8bb45af0b59a07c
+xpack.security.encryptionKey: 87babfa41f3a3aabeddf061ca8b278cc
+
+xpack.security.session.idleTimeout: "1h"  # Session idle timeout
+xpack.security.session.lifespan: "30d"    # Maximum session lifespan
 
 ## Fleet
 ## https://www.elastic.co/guide/en/kibana/current/fleet-settings-kb.html
 #
-xpack.fleet.agents.fleet_server.hosts: [ http://fleet-server:8220 ]
+xpack.fleet.agents.enabled: true
+xpack.fleet.agents.fleet_server.hosts: [ http://10.20.20.125:8220 ]
+# xpack.fleet.agents.elasticsearch.hosts: [ http://10.20.20.125:9200 ]
+
 
 xpack.fleet.outputs:
   - id: fleet-default-output
     name: default
     type: elasticsearch
-    hosts: [ http://elasticsearch:9200 ]
+    hosts: [ http://10.20.20.125:9200 ]
     is_default: true
     is_default_monitoring: true
 

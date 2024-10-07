@@ -1,0 +1,4 @@
+elasticsearch/_state
+elasticsearch/_state/**
+elasticsearch/indices
+elasticsearch/indices/**
